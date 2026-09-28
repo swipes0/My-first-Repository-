@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHILDJAY | Fire & Safety Equipment</title>
+    <style>
+        /* --- CSS VARIABLES & RESET --- */
+        :root {
+            --primary-color: GREEN;
+            /* Safety Red */
+            --accent-color: #457b9d;
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-color: #2b2d42;
+            --text-secondary: #6c757d;
+            --border-color: #e9ecef;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        /* Dark Mode Variables */
+        body.dark-mode {
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --text-color: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            --border-color: #333;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: var(--transition);
+            line-height: 1.6;
+        }
+
+        /* --- HEADER & NAV --- */
+        header {
+            background-color: var(--card-bg);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 1rem 5%;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        /* Toggle Switch */
+        .theme-switch-wrapper {
+            display: flex;
+            align-items: center;
+        }
+
+        .theme-switch {
+            display: inline-block;
+            height: 24px;
+            position: relative;
+            width: 48px;
+        }
+
+        .theme-switch input {
+            display: none;
+        }
+
+        .slider {
+            background-color: #ccc;
+            bottom: 0;
+            cursor: pointer;
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            background-color: white;
+            bottom: 4px;
+            content: "";
+            height: 16px;
+            left: 4px;
+            position: absolute;
+            transition: .4s;
+            width: 16px;
+            border-radius: 50%;
+        }
+
+        input:checked+.slider {
+            background-color: var(--primary-color);
+        }
+
+        input:checked+.slider:before {
+            transform: translateX(24px);
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1599158150601-1417eb6066bb?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding: 0 1rem;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            padding: 0.8rem 2rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        /* --- CATEGORIES & FILTER --- */
+        .container {
+            padding: 4rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .filter-btn.active,
+        .filter-btn:hover {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        /* --- PRODUCT GRID --- */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-image {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .product-details {
+            padding: 1.5rem;
+        }
+
+        .category-tag {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .product-title {
+            font-size: 1.2rem;
+            margin: 0.5rem 0;
+            font-weight: 700;
+        }
+
+        .product-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+        }
+
+        .favorite-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: 0.2s;
+        }
+
+        .favorite-btn.active {
+            color: var(--primary-color);
+        }
+
+        /* --- REQUEST MODAL --- */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 200;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            right: 1.5rem;
+            top: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            background: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: var(--card-bg);
+            padding: 3rem 5%;
+            margin-top: 4rem;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        /* Responsive Tweaks */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .nav-controls {
+                gap: 0.5rem;
+            }
+        }
+
+        .logo9 {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+            transition: color 0.3s ease;
+        }
+
+        .logo9 img {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+            display: block;
+            transition: filter 0.3s ease;
+        }
+
+        /* Turn only the black parts white in Dark Mode while preserving colors */
+        [data-theme="dark"] .logo9 img,
+        body.dark-mode .logo9 img,
+        body.dark .logo9 img {
+            filter: invert(1) hue-rotate(180deg);
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <nav>
+            <div class="logo9"><img src="logo9.png" alt="logo9.png">PHIL D JAY VENTURES</div>
+            <div class="nav-controls">
+                <div class="theme-switch-wrapper">
+                    <label class="theme-switch" for="checkbox">
+                        <input type="checkbox" id="checkbox" />
+                        <div class="slider"></div>
+                    </label>
+                </div>
+                <button class="btn" style="padding: 0.5rem 1rem;" onclick="scrollToProducts()">Products</button>
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Protect What Matters Most</h1>
+            <p>Premium Fire Extinguishers & Industrial Safety Materials</p>
+            <button class="btn" onclick="scrollToProducts()">View Catalog</button>
+        </div>
+    </section>
+
+    <div class="container" id="products-section">
+        <div class="section-title">
+            <h2>Our Equipment</h2>
+            <p>Select a category to filter products</p>
+        </div>
+
+        <div class="filter-buttons">
+            <button class="filter-btn active" onclick="filterProducts('all')">All</button>
+            <button class="filter-btn" onclick="filterProducts('extinguisher')">Fire Extinguishers</button>
+            <button class="filter-btn" onclick="filterProducts('safety')">Safety Materials</button>
+        </div>
+
+        <div class="product-grid" id="productGrid">
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 SafeGuard Equipment. All rights reserved.</p>
+        <p style="margin-top: 0.5rem; font-size: 0.9rem; color: var(--text-secondary);">
+            Providing top-tier safety solutions for businesses and homes.
+        </p>
+    </footer>
+
+    <div class="modal" id="requestModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <h3 style="margin-bottom: 1rem;">Request Quote</h3>
+            <p id="modal-product-name" style="margin-bottom: 1.5rem; color: var(--primary-color); font-weight: bold;">
+            </p>
+            <form onsubmit="handleRequest(event)">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" required placeholder="John Doe">
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" required placeholder="john@example.com">
+                </div>
+                <div class="form-group">
+                    <label>Quantity / Details</label>
+                    <textarea rows="3" required placeholder="I need 5 units..."></textarea>
+                </div>
+                <button type="submit" class="btn" style="width: 100%;">Submit Request</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // --- DATA ---
+        const products = [
+            {
+                id: 1,
+                name: " Dry Chemical Extinguisher 6kg",
+                category: "extinguisher",
+                image: "extin.jpg"
+            },
+
+            {
+                id: 1,
+                name: "Dry Chemical Extinguisher",
+                category: "extinguisher",
+                image: "extin.jpg"
+            },
+
+
+
+            {
+                id: 1,
+                name: " Dry Chemical Extinguisher",
+                category: "extinguisher",
+                image: "extin.jpg"
+            },
+
+
+            {
+                id: 2,
+                name: "Dry Chemical Extinguisher",
+                category: "extinguisher",
+                image: "extin.jpg"
+            },
+
+            {
+                id: 3,
+                name: "CO2 Fire Extinguisher",
+                category: "extinguisher",
+                image: "co2.jpg"
+            },
+            {
+                id: 4,
+                name: "Industrial Hard Hat",
+                category: "safety",
+                image: "girll.jpeg",
+            },
+            {
+                id: 5,
+                name: "High-Vis Safety Vest",
+                category: "safety",
+                image: "https://images.unsplash.com/photo-1595168289873-1941d69d2d89?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 6,
+                name: "Heavy Duty Foam Extinguisher",
+                category: "extinguisher",
+                image: "https://plus.unsplash.com/premium_photo-1661962360398-38148b6e680a?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 7,
+                name: "Protective Goggles",
+                category: "safety",
+                image: "https://images.unsplash.com/photo-1582560475093-6d140e87b7a5?auto=format&fit=crop&w=600&q=80"
+            }
+        ];
+
+        // --- RENDER PRODUCTS ---
+        const grid = document.getElementById('productGrid');
+
+        function renderProducts(filter = 'all') {
+            grid.innerHTML = '';
+
+            const filtered = filter === 'all'
+                ? products
+                : products.filter(p => p.category === filter);
+
+            filtered.forEach(product => {
+                const isFav = localStorage.getItem(`fav_${product.id}`) === 'true';
+
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}" class="product-image">
+                    <div class="product-details">
+                        <span class="category-tag">${product.category === 'extinguisher' ? 'Fire Safety' : 'Protective Gear'}</span>
+                        <h3 class="product-title">${product.name}</h3>
+                        <div class="product-actions">
+                            <button class="btn" onclick="openModal('${product.name}')">Request Quote</button>
+                            <button class="favorite-btn ${isFav ? 'active' : ''}" onclick="toggleFav(this, ${product.id})">
+                                ${isFav ? '♥' : '♡'}
+                            </button>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // --- FILTER LOGIC ---
+        function filterProducts(category) {
+            // Update UI buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            renderProducts(category);
+        }
+
+        // --- DARK MODE LOGIC ---
+        const toggleSwitch = document.querySelector('#checkbox');
+        const currentTheme = localStorage.getItem('theme');
+
+        if (currentTheme) {
+            document.body.classList.toggle('dark-mode', currentTheme === 'dark');
+            toggleSwitch.checked = currentTheme === 'dark';
+        }
+
+        toggleSwitch.addEventListener('change', function (e) {
+            if (e.target.checked) {
+                document.body.classList.add('dark-mode');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.body.classList.remove('dark-mode');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // --- FAVORITES LOGIC ---
+        function toggleFav(btn, id) {
+            const key = `fav_${id}`;
+            const isFav = localStorage.getItem(key) === 'true';
+
+            if (isFav) {
+                localStorage.removeItem(key);
+                btn.innerHTML = '♡';
+                btn.classList.remove('active');
+            } else {
+                localStorage.setItem(key, 'true');
+                btn.innerHTML = '♥';
+                btn.classList.add('active');
+            }
+        }
+
+        // --- MODAL LOGIC ---
+        const modal = document.getElementById('requestModal');
+
+        function openModal(productName) {
+            document.getElementById('modal-product-name').textContent = "Item: " + productName;
+            modal.style.display = 'flex';
+        }
+
+        function closeModal() {
+            modal.style.display = 'none';
+        }
+
+        function handleRequest(e) {
+            e.preventDefault();
+            alert('Thank you! Your request has been sent to our sales team.');
+            closeModal();
+        }
+
+        // Close modal if clicking outside
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+
+        function scrollToProducts() {
+            document.getElementById('products-section').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Initial Render
+        renderProducts();
+
+        const logoContainer = document.querySelector('.logo9');
+        const logoImg = document.querySelector('.logo9 img');
+        const nav = document.querySelector('nav');
+
+        function moveLogoImgOnScroll() {
+            if (!logoImg || !logoContainer || !nav) return;
+
+            // Distance in px over which the animation completes
+            const maxScroll = 150;
+            const progress = Math.min(window.scrollY / maxScroll, 1);
+
+            // Initial center of the image relative to nav
+            const initialImgCenter = logoContainer.offsetLeft + (logoImg.offsetWidth / 2);
+            const targetNavCenter = nav.clientWidth / 2;
+
+            // Calculate exact distance to the center of the nav
+            const centerOffset = targetNavCenter - initialImgCenter;
+
+            // Scale from 1.0x to 1.6x (makes it 60% bigger at the center)
+            const scale = 1 + (progress * 0.6);
+
+            // Move and scale ONLY the image
+            logoImg.style.transform = `translateX(${progress * centerOffset}px) scale(${scale})`;
+        }
+
+        window.addEventListener('scroll', moveLogoImgOnScroll, { passive: true });
+        window.addEventListener('resize', moveLogoImgOnScroll);
+
+    </script>
+</body>
+
+</html>
